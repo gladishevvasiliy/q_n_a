@@ -1,11 +1,39 @@
 @font-face {
-  src: url("./fonts/Kruk-Kalashn-edit-VG.ttf");
-  font-family: "Kruk";
+  src: url('./fonts/Kruk-Kalashn-edit-VG.ttf');
+  font-family: 'Kruk';
 }
 
 .kruk {
-  font-family: "Kruk";
-  font-size: 67px;
+  font-family: 'Kruk';
+  text-align: center;
+}
+
+@media screen and (max-width: 265px) {
+  .krukIllustration {
+    font-size: 80px;
+  }
+}
+
+@media (min-width: 265px) and (max-width: 400px) {
+  .krukIllustration {
+    font-size: 140px;
+  }
+}
+
+@media (min-width: 400px) and (max-width: 576px) {
+  .krukIllustration {
+    font-size: 210px;
+  }
+}
+
+@media (min-width: 576px) {
+  .krukIllustration {
+    font-size: 140px;
+  }
+}
+
+.krukResult {
+  font-size: 80px;
 }
 
 .red {
