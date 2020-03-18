@@ -9,7 +9,7 @@ const Menu = props => {
   let { path, url } = useRouteMatch();
   const { testNameList } = props;
   return (
-    <div>
+    <>
       <Switch>
         <Route exact path={path}>
           <ListGroup>
@@ -24,7 +24,7 @@ const Menu = props => {
           <TestWrapper />
         </Route>
       </Switch>
-    </div>
+    </>
   );
 };
 

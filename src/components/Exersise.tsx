@@ -26,16 +26,15 @@ const Exersise = ({ id, value, optionList, onGetAnswer, defaultQuestion }) => {
     <>
       {value && (
         <div>
-          <StyledQuestion>{`${
-            value.question ? value.question : defaultQuestion
-          }`}</StyledQuestion>
+          <StyledQuestion>
+            {value.question ? value.question : defaultQuestion}
+          </StyledQuestion>
           <div
             className={value.customStyles}
             dangerouslySetInnerHTML={{ __html: value.illustration }}
           />
-          {/* <p>{`Выберите ответ:`}</p> */}
           <ButtonGroup vertical>
-            {optionList.map((answer, index) => (
+            {optionList.map(answer => (
               <StyledButton key={answer} onClick={e => onChecked(answer, e)}>
                 {answer}
               </StyledButton>

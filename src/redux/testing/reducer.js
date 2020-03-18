@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { filter } from 'lodash'
 const initialState = {
   isRunning: true,
+  isFinished: false,
   exersiseIdList: [],
   testId: undefined,
   exersiseId: undefined,
@@ -36,6 +37,7 @@ const testing = createSlice({
       // если закончились id заданий
       if (state.exersiseIdList.length === 0) {
         state.isRunning = false
+        state.isFinished = true
       } else {
         state.exersiseId = state.exersiseIdList[0]
       }
