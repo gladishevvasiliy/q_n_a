@@ -1,18 +1,18 @@
+import React from 'react'
 import { filter, random, shuffle } from 'lodash'
-
-export const delay = (response) => {
-  let promise = new Promise((resolve) => {
+export const delay = response => {
+  let promise = new Promise(resolve => {
     setTimeout(() => {
-      resolve();
+      resolve()
     }, 300)
-  });
-  return promise.then(() => (response))
+  })
+  return promise.then(() => response)
 }
 
 export const fileToBase64 = (file, callback) => {
-  let reader = new FileReader();
+  let reader = new FileReader()
   reader.readAsDataURL(file)
-  reader.onload = function () {
+  reader.onload = function() {
     callback(reader.result)
   }
 }
@@ -33,4 +33,16 @@ export const getOptions = (config, trueAnswer) => {
     listWithoutTrueAnswer.splice(randomIndex, 1)
   }
   return shuffle([...randomOptionsWithTrueAnswer, trueAnswer])
+}
+
+export const getIllustration = (type, value) => {
+  switch (type) {
+    case 'html':
+      return <div dangerouslySetInnerHTML={{ __html: value }}></div>
+    case 'svg':
+      const SvgImage = value
+      return <SvgImage />
+    default:
+      break
+  }
 }

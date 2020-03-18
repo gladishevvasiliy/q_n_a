@@ -1,49 +1,58 @@
-import React from "react";
-import { Button, ButtonGroup } from "react-bootstrap";
-import styled from "styled-components";
-
+import React from 'react'
+import { Button, ButtonGroup, Row, Col } from 'react-bootstrap'
+import get from 'lodash/get'
+import styled from 'styled-components'
+import { getIllustration } from '../utils'
 const StyledButton = styled(Button)`
   display: block;
   margin-bottom: 4px;
-`;
+`
+const StyledButtonGroup = styled(ButtonGroup)`
+  width: 100%;
+`
 
 const StyledQuestion = styled.p`
   font-size: 16pt;
-`;
+`
 
 const Exersise = ({ id, value, optionList, onGetAnswer, defaultQuestion }) => {
-  const onChecked = (answer, e) => {
+  const { question, customStyles, typeOfIllustration, illustration, answer } = value
+
+  const onChecked = (userAnswer, e) => {
     onGetAnswer({
-      answerValue: answer,
-      trueAnswer: value.answer,
-      result: answer === value.answer,
+      answerValue: userAnswer,
+      trueAnswer: answer,
+      result: userAnswer === answer,
       exersiseId: id,
-      customStyles: value.customStyles,
-      illustration: value.illustration
-    });
-  };
+      customStyles,
+      illustration,
+      typeOfIllustration
+    })
+  }
   return (
     <>
       {value && (
-        <div>
-          <StyledQuestion>
-            {value.question ? value.question : defaultQuestion}
-          </StyledQuestion>
-          <div
-            className={value.customStyles}
-            dangerouslySetInnerHTML={{ __html: value.illustration }}
-          />
-          <ButtonGroup vertical>
-            {optionList.map(answer => (
-              <StyledButton key={answer} onClick={e => onChecked(answer, e)}>
-                {answer}
-              </StyledButton>
-            ))}
-          </ButtonGroup>
-        </div>
+        <Row>
+          <Col sm={6}>
+            <div className={get(customStyles, 'illustration')}>
+              {getIllustration(typeOfIllustration, illustration)}
+            </div>
+          </Col>
+          <Col sm={6}>
+            <StyledQuestion>{question ? question : defaultQuestion}</StyledQuestion>
+
+            <StyledButtonGroup vertical>
+              {optionList.map(answer => (
+                <StyledButton key={answer} onClick={e => onChecked(answer, e)}>
+                  {answer}
+                </StyledButton>
+              ))}
+            </StyledButtonGroup>
+          </Col>
+        </Row>
       )}
     </>
-  );
-};
+  )
+}
 
-export default Exersise;
+export default Exersise
