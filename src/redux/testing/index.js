@@ -7,6 +7,7 @@ export {
 } from './reducer'
 
 export {
+  getCurrentTestProgressValue,
   getIsTestFinishedValue,
   getIsTestRunningValue,
   getResultsValue,

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { filter } from 'lodash'
+import { filter, findIndex } from 'lodash'
+
 const initialState = {
   isRunning: true,
   isFinished: false,
@@ -24,16 +25,22 @@ const testing = createSlice({
       }
     },
     setAnswer: (state, action) => {
-      const answerData = action.payload
-      state.results = [...state.results, answerData]
+      const newAnswerData = action.payload
+      if (findIndex(state.results, item => item.exersiseId === newAnswerData.exersiseId) === -1) {
+        state.results = [...state.results, newAnswerData]
+      }
     },
     setExersiseIdList: (state, action) => {
       const exersiseIdList = action.payload
       state.exersiseIdList = exersiseIdList
     },
     goToNextExersise: (state, action) => {
-      const exersiseId = action.payload
-      state.exersiseIdList = filter(state.exersiseIdList, id => id !== exersiseId)
+      const { result, exersiseId } = action.payload
+      if (result) {
+        state.exersiseIdList = filter(state.exersiseIdList, id => id !== exersiseId)
+      } else {
+        state.exersiseIdList = [...state.exersiseIdList.slice(1), state.exersiseIdList[0]]
+      }
       // если закончились id заданий
       if (state.exersiseIdList.length === 0) {
         state.isRunning = false

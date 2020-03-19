@@ -1,37 +1,30 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Link, Switch, Route, useRouteMatch } from "react-router-dom";
-import ListGroup from "react-bootstrap/ListGroup";
-import { getTestNameAndIdList } from "../redux/testList";
-import TestWrapper from "./TestWrapper";
+import React from 'react'
+import { connect } from 'react-redux'
+import ListGroup from 'react-bootstrap/ListGroup'
+import Link from 'next/link'
+import { getTestNameAndIdList } from '../redux/testList'
 
 const Menu = props => {
-  let { path, url } = useRouteMatch();
-  const { testNameList } = props;
+  const { testNameList } = props
   return (
     <>
-      <Switch>
-        <Route exact path={path}>
-          <ListGroup>
-            {testNameList.map(item => (
-              <ListGroup.Item key={item.id}>
-                <Link to={`${url}/tests/${item.id}`}>{item.name}</Link>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-        </Route>
-        <Route path={`${path}/tests/:testId`}>
-          <TestWrapper />
-        </Route>
-      </Switch>
+      <ListGroup>
+        {testNameList.map(item => (
+          <ListGroup.Item key={item.id}>
+            <Link href="/test/[id]" as={`/test/${item.id}`}>
+              <a>{item.name}</a>
+            </Link>
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
     </>
-  );
-};
+  )
+}
 
 const mapStateToProps = state => ({
-  testNameList: getTestNameAndIdList(state)
-});
+  testNameList: getTestNameAndIdList(state),
+})
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(Menu)

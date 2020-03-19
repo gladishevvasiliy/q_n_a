@@ -4,6 +4,7 @@ import { find } from 'lodash'
 import styled from 'styled-components'
 import Exersise from '../components/Exersise'
 import Results from '../components/Results'
+import ProgressBar from '../components/ProgressBar'
 import { getCurrentTestValue, currentTestLoading } from '../redux/currentTest'
 import {
   getIsTestFinishedValue,
@@ -15,14 +16,20 @@ import {
 } from '../redux/testing'
 import { getOptions } from '../utils'
 
-const StyledTestName = styled.p`
-  font-size: 14pt;
+const ProgressContainer = styled.div`
+  height: 100px;
+  display: flex;
+  align-items: center;
+`
+const StyledTestContaiter = styled.div`
+  width: 100%;
+  max-width: 900px;
 `
 
 interface IProps {
   loadTest?: any
   test?: any
-  id?: string
+  id?: string | string[]
   exersiseId?: string
   setAnswer?: any
   setExersiseId?: any
@@ -41,7 +48,7 @@ class Test extends React.Component<IProps> {
     const { setAnswer, goToNextExersise } = this.props
 
     setAnswer(answerData)
-    goToNextExersise(answerData.exersiseId)
+    goToNextExersise(answerData)
   }
 
   render() {
@@ -51,27 +58,25 @@ class Test extends React.Component<IProps> {
       exersises && exersiseId ? find(exersises, { id: exersiseId }) : {}
 
     return (
-      <>
+      <StyledTestContaiter>
+        <ProgressContainer>
+          <ProgressBar />
+        </ProgressContainer>
         {test && (
           <>
             {isTestRunning && (
-              <>
-                <StyledTestName>{test.name}</StyledTestName>
-                {exersise && (
-                  <Exersise
-                    defaultQuestion={test.defaultQuestion}
-                    optionList={getOptions(config, exersise.answer)}
-                    id={exersiseId}
-                    value={exersise}
-                    onGetAnswer={this.onGetAnswer}
-                  />
-                )}
-              </>
+              <Exersise
+                defaultQuestion={test.defaultQuestion}
+                optionList={getOptions(config, exersise.answer)}
+                id={exersiseId}
+                value={exersise}
+                onGetAnswer={this.onGetAnswer}
+              />
             )}
             {isTestFinished && <Results />}
           </>
         )}
-      </>
+      </StyledTestContaiter>
     )
   }
 }

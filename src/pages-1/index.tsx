@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import styled from 'styled-components'
 import { Container, Navbar } from 'react-bootstrap'
+
 import { testListLoading } from '../redux/testList'
 import Menu from '../components/Menu'
 
@@ -26,7 +28,13 @@ export class Index extends Component<IndexProps> {
           <StyledNavbar.Brand href="/home">Учим крюки</StyledNavbar.Brand>
         </StyledNavbar>
         <Container>
-          <Menu />
+          <Router>
+            <Switch>
+              <Route path="/home">
+                <Menu />
+              </Route>
+            </Switch>
+          </Router>
         </Container>
       </>
     )

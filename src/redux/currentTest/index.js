@@ -7,7 +7,8 @@ export {
 
 export {
   getCurrentTestValue,
-  getCurrentTestProcess
+  getCurrentTestProcess,
+  getTestLength,
 } from './selectors'
 
 export {
