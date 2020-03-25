@@ -1,12 +1,8 @@
-// import { ReactComponent as Dog } from './media/icons/dog.svg'
-// import { ReactComponent as Cat } from './media/icons/cat.svg'
-// import { ReactComponent as Rabbit } from './media/icons/rabbit.svg'
-// import { ReactComponent as Fish } from './media/icons/fish.svg'
-// import Fish from './media/icons/fish.svg'
-// import Rabbit from './media/icons/rabbit.svg'
-// import Cat from './media/icons/cat.svg'
+import Fish from './media/icons/fish.svg'
+import Rabbit from './media/icons/rabbit.svg'
+import Cat from './media/icons/cat.svg'
 import Dog from './media/icons/dog.svg'
-console.log({ Dog })
+
 const config = {
   tests: [
     {

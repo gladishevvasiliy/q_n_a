@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Container, Navbar } from 'react-bootstrap'
 import { testListLoading } from '../redux/testList'
 import Menu from '../components/Menu'
+import Cat from '../res/media/icons/cat.svg'
 
 const StyledNavbar = styled(Navbar)`
   margin-bottom: 20px;

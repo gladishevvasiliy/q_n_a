@@ -1,32 +1,39 @@
 import React from 'react'
-import { Button, ButtonGroup, Row, Col } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import { Row, Col } from 'react-bootstrap'
 import get from 'lodash/get'
 import styled from 'styled-components'
 import { getIllustration } from '../utils'
+import { StyledButton } from './Styles'
+import { setActiveAnswer, getActiveAnswer, setAnswer } from '../redux/testing'
 
-const StyledButton = styled(Button)`
-  display: block;
-  margin-bottom: 4px;
-`
-const StyledButtonGroup = styled(ButtonGroup)`
+const AnswerButtonList = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: center;
 `
-const StyledCol = styled(Col)`
-  /* background-color: grey; */
-`
+const StyledCol = styled(Col)``
 const StyledRow = styled(Row)`
-  width: 100%;
-  /* height: 100%; */
+  width: 80%;
   justify-content: center;
   align-items: center;
 `
 
 const StyledQuestion = styled.p`
-  font-size: 20pt;
+  font-size: 22pt;
   font-weight: 600;
+  margin-bottom: 5rem;
 `
 
-const Exersise = ({ id, value, optionList, onGetAnswer, defaultQuestion }) => {
+const Exersise = ({
+  id,
+  value,
+  optionList,
+  setActiveAnswer,
+  setAnswer,
+  defaultQuestion,
+  activeAnswerData,
+}) => {
   const {
     question,
     customStyles,
@@ -35,8 +42,9 @@ const Exersise = ({ id, value, optionList, onGetAnswer, defaultQuestion }) => {
     answer,
   } = value
 
+  const { answerValue } = activeAnswerData
   const onChecked = (userAnswer, e) => {
-    onGetAnswer({
+    const answerData = {
       answerValue: userAnswer,
       trueAnswer: answer,
       result: userAnswer === answer,
@@ -44,26 +52,32 @@ const Exersise = ({ id, value, optionList, onGetAnswer, defaultQuestion }) => {
       customStyles,
       illustration,
       typeOfIllustration,
-    })
+    }
+    setAnswer(answerData)
+    setActiveAnswer(answerData)
   }
   return (
     <>
       {value && (
         <StyledRow>
-          <StyledCol sm={6}>
+          <StyledCol>
             <StyledQuestion>
               {question ? question : defaultQuestion}
             </StyledQuestion>
             <div className={get(customStyles, 'illustration')}>
               {getIllustration(typeOfIllustration, illustration)}
             </div>
-            <StyledButtonGroup vertical>
+            <AnswerButtonList>
               {optionList.map(answer => (
-                <StyledButton key={answer} onClick={e => onChecked(answer, e)}>
+                <StyledButton
+                  key={answer}
+                  active={answerValue === answer}
+                  onClick={e => onChecked(answer, e)}
+                >
                   {answer}
                 </StyledButton>
               ))}
-            </StyledButtonGroup>
+            </AnswerButtonList>
           </StyledCol>
         </StyledRow>
       )}
@@ -71,4 +85,13 @@ const Exersise = ({ id, value, optionList, onGetAnswer, defaultQuestion }) => {
   )
 }
 
-export default Exersise
+const mapStateToProps = state => ({
+  activeAnswerData: getActiveAnswer(state),
+})
+
+const mapDispatchToProps = dispatch => ({
+  setActiveAnswer: data => dispatch(setActiveAnswer(data)),
+  setAnswer: answerData => dispatch(setAnswer(answerData)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Exersise)
